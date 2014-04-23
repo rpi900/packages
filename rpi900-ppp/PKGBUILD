@@ -1,0 +1,33 @@
+# Maintainer: Matthew Hollingworth <matthew@rpi900.com>
+pkgname=rpi900-ppp
+pkgver=0.1
+pkgrel=1
+pkgdesc='configuration files for PPP networking over DNT900 radio'
+arch=('armv6h')
+url='http://rpi900.com'
+license=('GPL')
+depends=('ppp' 'findutils')
+backup=('etc/rpi900-ppp.conf')
+options=('emptydirs')
+install=rpi900-ppp.install
+source=(
+  rpi900-ppp.conf
+  rpi900-ppp-base@.service
+  rpi900-ppp-remote@.service
+  99-rpi900-ppp.rules
+)
+md5sums=(
+  'SKIP'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+)
+package() {
+  mkdir -p "${pkgdir}/etc/rpi900-ppp.d"
+  cp "${srcdir}/rpi900-ppp.conf" "${pkgdir}/etc"
+  mkdir -p "${pkgdir}/usr/lib/systemd/system"
+  cp "${srcdir}/rpi900-ppp-base@.service" "${pkgdir}/usr/lib/systemd/system"
+  cp "${srcdir}/rpi900-ppp-remote@.service" "${pkgdir}/usr/lib/systemd/system"
+  mkdir -p "${pkgdir}/usr/lib/udev/rules.d"
+  cp "${srcdir}/99-rpi900-ppp.rules" "${pkgdir}/usr/lib/udev/rules.d"
+}

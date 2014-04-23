@@ -1,0 +1,15 @@
+common() {
+  systemctl daemon-reload
+  udevadm control --reload
+}
+post_install() {
+  common
+  echo ">>> Remember to set the local IP address in /etc/rpi900-ppp.conf"
+  echo ">>> Remember to set a password in /etc/ppp/chap-secrets or use noauth"
+}
+post_upgrade() {
+  common
+}
+post_remove() {
+  common
+}

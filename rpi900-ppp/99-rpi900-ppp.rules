@@ -1,0 +1,8 @@
+# triggered when a tty appears for the base radio:
+SUBSYSTEM=="tty" SUBSYSTEMS=="dnt900" ATTRS{DeviceMode}=="0x01" RUN+="/usr/bin/systemctl start rpi900-ppp-base@%k"
+
+# triggered when a tty appears for a remote radio and we are the base radio:
+SUBSYSTEM=="tty" SUBSYSTEMS=="dnt900" ATTRS{local/DeviceMode}!="0x01" GOTO="rpi900-ppp-end"
+SUBSYSTEM=="tty" SUBSYSTEMS=="dnt900" TEST!="/etc/rpi900-ppp.d/$attr{MacAddress}.deny"  PROGRAM="/usr/bin/find /etc/rpi900-ppp.d/ -name *.allow" RESULT!="*.allow" RUN+="/usr/bin/systemctl start rpi900-ppp-remote@%k"
+SUBSYSTEM=="tty" SUBSYSTEMS=="dnt900" TEST=="/etc/rpi900-ppp.d/$attr{MacAddress}.allow" PROGRAM="/usr/bin/find /etc/rpi900-ppp.d/ -name *.deny"  RESULT!="*.deny"  RUN+="/usr/bin/systemctl start rpi900-ppp-remote@%k"
+LABEL="rpi900-ppp-end"

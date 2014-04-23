@@ -1,0 +1,14 @@
+[Unit]
+Description=DNT900 line discipline on ttyAMA0
+After=dev-ttyAMA0.device
+After=systemd-modules-load.service
+
+[Service]
+EnvironmentFile=/etc/rpi900.conf
+ExecStartPre=/usr/bin/rpirtscts on
+ExecStartPre=/usr/bin/stty -F /dev/ttyAMA0 crtscts
+ExecStart=/usr/bin/ldattach -8n1 -s ${SPEED} 29 /dev/ttyAMA0
+Type=forking
+
+[Install]
+WantedBy=multi-user.target

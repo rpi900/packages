@@ -1,0 +1,46 @@
+# Maintainer: Matthew Hollingworth <matthew@rpi900.com>
+pkgname=rpi900
+pkgver=0.3.4
+pkgrel=1
+pkgdesc='DNT900 line discipline module and rpirtscts flow control utility'
+arch=('armv6h')
+url='http://rpi900.com'
+license=('GPL')
+makedepends=('linux-raspberrypi-headers>=3.10.18')
+depends=('glibc' 'linux-raspberrypi>=3.10.18')
+backup=('etc/rpi900.conf')
+install=rpi900.install
+source=(
+  'rpirtscts-1.0.tar.gz::https://github.com/mholling/rpirtscts/archive/v1.0.tar.gz'
+  "dnt900-${pkgver}.tar.gz::https://github.com/mholling/dnt900/archive/v${pkgver}.tar.gz"
+  rpi900.conf
+  rpi900.service
+  99-rpi900.rules
+)
+md5sums=(
+  '378812e93d030db027c238de38a6170d'
+  '75091299a5cb672f47891b20d0fe22b2'
+  'SKIP'
+  'SKIP'
+  'SKIP'
+)
+build() {
+  cd "${srcdir}/rpirtscts-1.0"
+  make
+  cd "${srcdir}/dnt900-${pkgver}"
+  make
+}
+package() {
+  cd "${srcdir}/rpirtscts-1.0"
+  DESTDIR="${pkgdir}" make install
+  cd "${srcdir}/dnt900-${pkgver}"
+  DESTDIR="${pkgdir}" make modules_install
+  mkdir -p "${pkgdir}/etc"
+  cp "${srcdir}/rpi900.conf" "${pkgdir}/etc"
+  mkdir -p "${pkgdir}/usr/lib/modules-load.d"
+  echo dnt900 > "${pkgdir}/usr/lib/modules-load.d/dnt900.conf"
+  mkdir -p "${pkgdir}/usr/lib/udev/rules.d"
+  cp "${srcdir}/99-rpi900.rules" "${pkgdir}/usr/lib/udev/rules.d"
+  mkdir -p "${pkgdir}/usr/lib/systemd/system"
+  cp "${srcdir}/rpi900.service" "${pkgdir}/usr/lib/systemd/system"
+}

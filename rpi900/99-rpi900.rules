@@ -1,0 +1,1 @@
+SUBSYSTEM=="tty" SUBSYSTEMS=="dnt900" SYMLINK+="$attr{MacAddress}"

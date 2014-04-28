@@ -1,5 +1,6 @@
 [Unit]
 Description=PPP link over /dev/%i
+BindsTo=dev-%i.device
 Requires=rpi900.service
 After=rpi900.service network.target
 
@@ -8,7 +9,7 @@ Environment=DNS1=8.8.8.8 DNS2=8.8.4.4 PROXY=eth0
 EnvironmentFile=/etc/rpi900-ppp.conf
 ExecStartPre=-/usr/bin/sysctl -w net.ipv4.ip_forward=1
 ExecStartPre=-/usr/bin/sysctl -w net.ipv4.conf.${PROXY}.proxy_arp=1
-ExecStart=/usr/sbin/pppd nodetach persist maxfail 0 nolog ${IPADDRESS}: /dev/%i proxyarp ms-dns ${DNS1} ms-dns ${DNS2} $OPTIONS
+ExecStart=/usr/bin/pppd nodetach persist maxfail 0 nolog ${IPADDRESS}: /dev/%i proxyarp ms-dns ${DNS1} ms-dns ${DNS2} $OPTIONS
 SuccessExitStatus=0 5 12 13 14 15 16
 RestartPreventExitStatus=1 2 3 4 6 7 8 9 10 11 17 18 19 SIGTERM
 Restart=on-success

@@ -1,12 +1,12 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900-ppp
 pkgver=0.1
-pkgrel=1
-pkgdesc='configuration files for PPP networking over DNT900 radio'
+pkgrel=2
+pkgdesc='PPP networking for RPi900'
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL')
-depends=('ppp' 'findutils')
+depends=('rpi900' 'ppp' 'findutils')
 backup=('etc/rpi900-ppp.conf')
 options=('emptydirs')
 install=rpi900-ppp.install

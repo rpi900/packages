@@ -1,4 +1,4 @@
-Summary (version 0.1-1)
+Summary (version 0.1-2)
 =======================
 
 This package installs an automatic [PPP](http://en.wikipedia.org/wiki/Point-to-point_protocol) network link on an [RPi900](http://rpi900.com) via its DNT900 radio.
@@ -14,7 +14,7 @@ First install the [*rpi900*](../rpi900/) package, then the *rpi900-ppp* package 
 
     cd ~/packages/rpi900
     makepkg --clean
-    sudo pacman -U rpi900-ppp-0.1-1-armv6h.pkg.tar.xz
+    sudo pacman -U rpi900-ppp-0.1-2-armv6h.pkg.tar.xz
 
 This should be repeated on every RPi900 (base or remote) in your radio network.
 
@@ -67,3 +67,4 @@ Release History
 ===============
 
 * 2014/04/22: version 0.1-1: initial release.
+* 2014/04/28: version 0.1-2: add rpi900 package as a dependency.

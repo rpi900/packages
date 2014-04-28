@@ -1,11 +1,12 @@
 [Unit]
 Description=PPP link over /dev/%i
+BindsTo=dev-%i.device
 Requires=rpi900.service
 After=rpi900.service
 
 [Service]
 EnvironmentFile=/etc/rpi900-ppp.conf
-ExecStart=/usr/sbin/pppd nodetach persist maxfail 0 nolog ${IPADDRESS}: /dev/%i noproxyarp defaultroute usepeerdns $OPTIONS
+ExecStart=/usr/bin/pppd nodetach persist maxfail 0 nolog ${IPADDRESS}: /dev/%i noproxyarp defaultroute usepeerdns $OPTIONS
 SuccessExitStatus=0 5 12 13 14 15 16 SIGKILL
 RestartPreventExitStatus=1 2 3 4 6 7 8 9 10 11 17 18 19
 Restart=on-success

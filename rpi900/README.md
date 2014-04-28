@@ -1,4 +1,4 @@
-Summary (version 0.3.4-1)
+Summary (version 0.3.4-2)
 =========================
 
 This `PKGBUILD` and related files build a simple package for managing the [DNT900 line discipline](https://github.com/mholling/dnt900) on RPi900. The line discipline allows you to easily access and change register values for the DNT900 radio, as well as direct data to remote DNT900 radios on the network using a separate, virtual *TTY* for each radio.
@@ -6,19 +6,15 @@ This `PKGBUILD` and related files build a simple package for managing the [DNT90
 Making the Package
 ==================
 
-Some basic tools are required to build the package. Install them as follows:
+You will first need to build and install the [*rpirtscts*](../rpirtscts/) package as a dependency. Next, install the linux kernel headers (needed to compile the DNT900 line discipline):
 
-    sudo pacman -S base-devel abs git linux-raspberrypi-headers
+    sudo pacman -S linux-raspberrypi-headers
 
-Next, download the package files:
+Finally, change to the *rpi900* package directory then make and install the package:
 
-    git clone https://github.com/rpi900/packages.git
-    cd packages/rpi900
-
-Finally, make and install the package:
-
+    cd ~/packages/rpi900
     makepkg --clean
-    sudo pacman -U rpi900-0.3.4-1-armv6h.pkg.tar.xz
+    sudo pacman -U rpi900-0.3.4-2-armv6h.pkg.tar.xz
 
 Operation
 =========
@@ -61,7 +57,7 @@ Updating the Kernel
 
 The DNT900 line discipline module is compiled specificically for the kernel currently in use. Upgrading your kernel (as sometimes occurs during `sudo pacman -Syu`) will cause the module to no longer be found. Counter this by rebuilding and reinstalling the *rpi900* package (be sure to reboot with the new kernel first).
 
-Alternatively you can hold back kernel upgrades by adding `IgnorePkg = linux-raspberrypi linux-raspberrypi-headers` to your `/etc/pacman.conf` file.
+Alternatively you can hold back kernel upgrades by adding `IgnorePkg = linux-raspberrypi linux-raspberrypi-headers` to the `[options]` section of your `/etc/pacman.conf` file.
 
 Package Contents
 ================
@@ -69,8 +65,7 @@ Package Contents
 The package installs the following files:
 
 * `/lib/modules/3.10.*-*-ARCH/extra/dnt900.ko`: this is the module file for the DNT900 line discipline.
-* `/usr/bin/rpirtscts`: this utility command enables alternate functions on the GPIO30 and GPIO31 pins, allowing them to serve as hardware flow control signals for the `ttyAMA0` serial port.
-* `/usr/lib/modules-load.d/dnt900.conf`: loads the DNT900 line discipline module at boot.
+* `/usr/lib/modules-load.d/rpi900.conf`: loads the DNT900 line discipline module at boot.
 * `/usr/lib/systemd/system/rpi900.service`: this systemd service file enables hardware flow control on the `ttyAMA0` serial port, then attaches the DNT900 line discipline. By default, the service is enabled.
 * `/usr/lib/udev/rules.d/99-rpi900.rules`: this udev rules file creates a device symlink for each radio's `ttyDNT*` device. So for example, when a radio with MAC address 0x00165F joins the network with tty `/dev/ttyDNT3`, a symlink `/dev/0x00165F` will link to the new tty for easy identification.
 * `/etc/rpi900.conf`: this configuratation file contains the serial speed and should be edited according to that used by the DNT900 radio.
@@ -81,3 +76,4 @@ Release History
 The version number of this package will track the current version of the [DNT900 line discipline](https://github.com/mholling/dnt900). Changes or new features (if any) will induce a new release for the same version (e.g. 0.3.4-1 to 0.3.4-2)
 
 * 2014/04/22: version 0.3.4-1: initial release.
+* 2014/04/28: version 0.3.4-2: move rpirtscts to separate package and add as dependency.

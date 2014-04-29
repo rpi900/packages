@@ -1,6 +1,10 @@
 post_install() {
   systemctl daemon-reload
   udevadm control --reload
+  if ! systemctl is-enabled -q rpi900.service 2> /dev/null; then
+    systemctl enable rpi900-ppp.service
+    echo ">>> Remember to set the serial speed in /etc/rpi900-ppp.conf"
+  fi
   echo ">>> Remember to set the local IP address in /etc/rpi900-ppp.conf"
   echo ">>> Remember to set a password in /etc/ppp/chap-secrets or use noauth"
 }
@@ -9,6 +13,7 @@ post_upgrade() {
   udevadm control --reload
 }
 post_remove() {
+  systemctl disable rpi900-ppp.service
   systemctl daemon-reload
   udevadm control --reload
 }

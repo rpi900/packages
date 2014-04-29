@@ -1,0 +1,19 @@
+[Unit]
+Description=PPP link over /dev/ttyAMA0
+BindsTo=dev-ttyAMA0.device
+After=dev-ttyAMA0.device
+Wants=network.target
+Before=network.target
+Conflicts=rpi900.service
+
+[Service]
+EnvironmentFile=-/etc/rpi900.conf
+EnvironmentFile=/etc/rpi900-ppp.conf
+ExecStartPre=/usr/bin/rpirtscts on
+ExecStart=/usr/bin/pppd /dev/ttyAMA0 ${SPEED} crtscts local nodetach persist maxfail 0 nolog ${IPADDRESS}: noproxyarp defaultroute usepeerdns $OPTIONS
+SuccessExitStatus=0 5 12 13 14 15 16 SIGKILL
+RestartPreventExitStatus=1 2 3 4 6 7 8 9 10 11 17 18 19
+Restart=on-success
+
+[Install]
+WantedBy=multi-user.target

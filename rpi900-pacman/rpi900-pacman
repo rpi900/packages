@@ -1,0 +1,22 @@
+#!/usr/bin/bash
+
+if [[ -f /run/rpi900-pacman.conf ]]; then
+  trap "fusermount -u -q /run/rpi900-pacman; exit 1" SIGHUP SIGINT SIGTERM ERR
+  . /run/rpi900-pacman.conf
+  for arg; do
+    [[ $arg != --sync && $arg != -S* ]] || SYNCH=yes
+    [[ $arg != --refresh && $arg != -y && $arg != -S*y* ]] || REFRESH=yes
+  done
+  if [[ $SYNCH && $REFRESH ]]; then
+    echo ":: Updating package database on RPi900 base station..."
+    ssh ${IPREMOTE?} 'repo-add -n /var/cache/pacman/pkg/rpi900.db.tar.gz `find /var/cache/pacman/pkg/*.pkg.tar.xz -cnewer /var/cache/pacman/pkg/rpi900.db.tar.gz 2>/dev/null || find /var/cache/pacman/pkg/*.pkg.tar.xz`'
+  fi
+  echo ":: Mounting package repository on RPi900 base station..."
+  mkdir -p /run/rpi900-pacman
+  sshfs ${IPREMOTE?}:/var/cache/pacman/pkg /run/rpi900-pacman -o ro,async
+  pacman --config /etc/pacman.d/rpi900.conf "$@"
+  fusermount -u /run/rpi900-pacman
+else
+  echo "not connected to RPi900 base station" 1>&2
+  exit 1
+fi

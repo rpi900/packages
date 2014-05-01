@@ -1,0 +1,51 @@
+.TH rpi900\-pacman 8
+.SH NAME
+rpi900\-pacman - pacman with configuration for remote RPi900
+.SH SYNOPSIS
+.B rpi900\-pacman
+\fIoperation\fR [\fIoptions\fR] [\fItargets\fR]
+.SH DESCRIPTION
+.B rpi900\-pacman
+is a wrapper for the
+.B pacman
+package manager, configured specifically for RPi900 remote stations connected via PPP to an RPi900 base station.
+.PP
+The slow connection on a remote RPi900 can cause pacman to give 404 errors when connecting to the standard Arch Linux repositories.
+To overcome this problem,
+.B rpi900\-pacman
+uses the package cache on the RPi900 base station as a repository.
+Connection to the repository is made via SSH and SSHFS.
+No setup is required on the base RPi900.
+.PP
+To make a package available for a remote RPi900 using
+.BR rpi900\-pacman ,
+first install or download the package on the base RPi900 using pacman.
+On the remote RPi900, use
+.B rpi900\-pacman
+with the same options as you would normally use for pacman.
+You will be prompted for the root password for the base RPi900 as part of the connection process.
+.PP
+If your command includes a database refresh (e.g. the
+.I \-Sy
+option), the repository database on the base RPi900 will be automatically updated with any new packages which are found on the base.
+(This may take some time, depending on the number of additions.)
+.SH OPTIONS
+As per
+.BR pacman (8).
+.SH FILES
+.I /etc/pacman.d/rpi900.conf
+.RS
+The pacman configuration file used by
+.BR rpi900\-pacman ,
+including the custom repository.
+Add any pacman options you need to this file, just as you would normally with
+.IR /etc/pacman.conf .
+See
+.BR pacman.conf (5)
+for further details.
+.RE
+.SH SEE ALSO
+.BR pacman (8),
+.BR pacman.conf (5)
+.SH AUTHOR
+Matthew Hollingworth (matthew@rpi900.com)

@@ -8,7 +8,7 @@ Making the Package
 
 Some basic tools are required to build the package. Install them as follows:
 
-    sudo pacman -S base-devel abs git
+    sudo pacman -S base-devel git
 
 Next, download the package files:
 

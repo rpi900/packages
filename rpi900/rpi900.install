@@ -1,18 +1,15 @@
-common() {
-  echo ">>> Updating module dependencies. Please wait ..."
-  depmod
+post_install() {
   systemctl daemon-reload
   udevadm control --reload
-}
-post_install() {
-  common
   systemctl enable rpi900.service
   echo ">>> Remember to set the serial speed in /etc/rpi900.conf"
 }
 post_upgrade() {
-  common
+  systemctl daemon-reload
+  udevadm control --reload
 }
 post_remove() {
   systemctl disable rpi900.service
-  common
+  systemctl daemon-reload
+  udevadm control --reload
 }

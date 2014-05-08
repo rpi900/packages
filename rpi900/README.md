@@ -1,20 +1,23 @@
-Summary (version 0.3.4-2)
+Summary (version 1.0-1)
 =========================
 
-This `PKGBUILD` and related files build a simple package for managing the [DNT900 line discipline](https://github.com/mholling/dnt900) on RPi900. The line discipline allows you to easily access and change register values for the DNT900 radio, as well as direct data to remote DNT900 radios on the network using a separate, virtual *TTY* for each radio.
+This `PKGBUILD` and related files form a simple package for managing the [DNT900 line discipline](https://github.com/mholling/dnt900) on RPi900. A service is provided for automatically attaching the line discipline to the Raspberry Pi's `ttyAMA0` serial port during system startup.
 
 Making the Package
 ==================
 
-You will first need to build and install the [*rpirtscts*](../rpirtscts/) package as a dependency. Next, install the linux kernel headers (needed to compile the DNT900 line discipline):
+The following dependencies should first be installed:
 
-    sudo pacman -S linux-raspberrypi-headers
+* the [*rpirtscts*](../rpirtscts/) package; and
+* the [*linux-rpi900*](../linux-rpi900/) kernel package.
+
+(If you have a reason for doing so, it is possible to keep the vanilla *linux-raspberrypi* kernel and instead install the [*dnt900*](../dnt900/) package to get the DNT900 line discipline on its own.)
 
 Finally, change to the *rpi900* package directory then make and install the package:
 
     cd ~/packages/rpi900
     makepkg --clean
-    sudo pacman -U rpi900-0.3.4-2-armv6h.pkg.tar.xz
+    sudo pacman -U rpi900-1.0-1-armv6h.pkg.tar.xz
 
 Operation
 =========
@@ -52,28 +55,18 @@ Changing the DNT900 `SerialRate` register takes immediate effect and causes a lo
     cat /sys/devices/virtual/dnt900/ttyAMA0/0x00165F/SerialRate          # confirm 0x04 as the new value
     echo 0x01 > /sys/devices/virtual/dnt900/ttyAMA0/0x00165F/MemorySave  # make the new SerialRate value permanent
 
-Updating the Kernel
-===================
-
-The DNT900 line discipline module is compiled specificically for the kernel currently in use. Upgrading your kernel (as sometimes occurs during `sudo pacman -Syu`) will cause the module to no longer be found. Counter this by rebuilding and reinstalling the *rpi900* package (be sure to reboot with the new kernel first).
-
-Alternatively you can hold back kernel upgrades by adding `IgnorePkg = linux-raspberrypi linux-raspberrypi-headers` to the `[options]` section of your `/etc/pacman.conf` file.
-
 Package Contents
 ================
 
 The package installs the following files:
 
-* `/lib/modules/3.10.*-*-ARCH/extra/dnt900.ko`: this is the module file for the DNT900 line discipline.
-* `/usr/lib/modules-load.d/rpi900.conf`: loads the DNT900 line discipline module at boot.
-* `/usr/lib/systemd/system/rpi900.service`: this systemd service file enables hardware flow control on the `ttyAMA0` serial port, then attaches the DNT900 line discipline. By default, the service is enabled.
+* `/usr/lib/systemd/system/rpi900.service`: this systemd service file loads the DNT900 line discipline module, enables hardware flow control on the `ttyAMA0` serial port, then attaches the line discipline. By default, the service is enabled.
 * `/usr/lib/udev/rules.d/99-rpi900.rules`: this udev rules file creates a device symlink for each radio's `ttyDNT*` device. So for example, when a radio with MAC address 0x00165F joins the network with tty `/dev/ttyDNT3`, a symlink `/dev/0x00165F` will link to the new tty for easy identification.
-* `/etc/rpi900.conf`: this configuratation file contains the serial speed and should be edited according to that used by the DNT900 radio.
+* `/etc/rpi900.conf`: this configuratation file contains the serial speed and should be edited to match the serial speed used by the DNT900 radio.
 
 Release History
 ===============
 
-The version number of this package will track the current version of the [DNT900 line discipline](https://github.com/mholling/dnt900). Changes or new features (if any) will induce a new release for the same version (e.g. 0.3.4-1 to 0.3.4-2)
-
 * 2014/04/22: version 0.3.4-1: initial release.
 * 2014/04/28: version 0.3.4-2: move rpirtscts to separate package and add as dependency.
+* 2014/05/09: version 1.0-1: extract dnt900 module to separate package.

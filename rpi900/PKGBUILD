@@ -1,38 +1,27 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900
-pkgver=0.3.4
-pkgrel=2
-pkgdesc='DNT900 line discipline module and service for RPi900'
+pkgver=1.0
+pkgrel=1
+pkgdesc='DNT900 line discipline service for RPi900'
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL')
-makedepends=('linux-raspberrypi-headers>=3.10.18')
-depends=('linux-raspberrypi>=3.10.18' 'rpirtscts')
+depends=('rpirtscts' 'dnt900')
 backup=('etc/rpi900.conf')
 install=rpi900.install
 source=(
-  "dnt900-${pkgver}.tar.gz::https://github.com/mholling/dnt900/archive/v${pkgver}.tar.gz"
   rpi900.conf
   rpi900.service
   99-rpi900.rules
 )
 md5sums=(
-  '75091299a5cb672f47891b20d0fe22b2'
   'SKIP'
   'SKIP'
   'SKIP'
 )
-build() {
-  cd "${srcdir}/dnt900-${pkgver}"
-  make
-}
 package() {
-  cd "${srcdir}/dnt900-${pkgver}"
-  DESTDIR="${pkgdir}" make modules_install
   mkdir -p "${pkgdir}/etc"
   cp "${srcdir}/rpi900.conf" "${pkgdir}/etc"
-  mkdir -p "${pkgdir}/usr/lib/modules-load.d"
-  echo dnt900 > "${pkgdir}/usr/lib/modules-load.d/rpi900.conf"
   mkdir -p "${pkgdir}/usr/lib/udev/rules.d"
   cp "${srcdir}/99-rpi900.rules" "${pkgdir}/usr/lib/udev/rules.d"
   mkdir -p "${pkgdir}/usr/lib/systemd/system"

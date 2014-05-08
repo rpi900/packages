@@ -1,0 +1,12 @@
+post_install() {
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod
+}
+post_upgrade() {
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod
+}
+post_remove() {
+  echo ">>> Updating module dependencies. Please wait ..."
+  depmod
+}

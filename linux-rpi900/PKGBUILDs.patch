@@ -1,0 +1,94 @@
+diff --git a/core/linux-raspberrypi/PKGBUILD b/core/linux-raspberrypi/PKGBUILD
+index 72f6c1a..645ff2c 100644
+--- a/core/linux-raspberrypi/PKGBUILD
++++ b/core/linux-raspberrypi/PKGBUILD
+@@ -19,6 +19,9 @@ source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
+         'config'
+         'change-default-console-loglevel.patch'
+         'args-uncompressed.txt'
++        'rpi900-pcf8523-i2c-register.patch'
++        'rpi900-high-speed-serial.patch'
++        'dnt900-0.3.4.tar.gz::https://github.com/mholling/dnt900/archive/v0.3.4.tar.gz'
+         'boot-uncompressed.txt'
+         'imagetool-uncompressed.py'
+         "git://git.code.sf.net/p/aufs/aufs3-standalone#branch=aufs${pkgver%.*}.x"
+@@ -28,6 +31,9 @@ md5sums=('dd4f412940e328603fcb0aa72ac37a8e'
+          '66f294e4a634498f095aa5776bc0488c'
+          '9d3c56a4b999c8bfbd4018089a62f662'
+          '9335d1263fd426215db69841a380ea26'
++         'f9719bb692f28c6e47bf1559783115ee'
++         '031562687b42f794bb62d3a4541e18d9'
++         '75091299a5cb672f47891b20d0fe22b2'
+          'a00e424e2fbb8c5a5f77ba2c4871bed4'
+          '2f82dbe5752af65ff409d737caf11954'
+          'SKIP'
+@@ -60,6 +66,14 @@ prepare() {
+   patch -Np1 -i ../aufs3-standalone/aufs3-standalone.patch
+ 
+   cat "${srcdir}/config" > ./.config
++  sed -i '/CONFIG_I2C_CHARDEV=/s/m/y/' .config
++  sed -i '/CONFIG_I2C_BCM2708=/s/m/y/' .config
++  sed -i '/CONFIG_RTC_DRV_PCF8523=/s/m/y/' .config
++  sed -i 's/# CONFIG_RTC_HCTOSYS is not set/CONFIG_RTC_HCTOSYS=y/' .config
++  patch -Np1 -i "${srcdir}/rpi900-pcf8523-i2c-register.patch"
++  patch -Np1 -i "${srcdir}/rpi900-high-speed-serial.patch"
++  cp "${srcdir}/dnt900-0.3.4/dnt900.c" drivers/tty/
++  echo 'obj-y += dnt900.o' >> drivers/tty/Makefile
+ 
+   # add pkgrel to extraversion
+   sed -ri "s|^(EXTRAVERSION =)(.*)|\1 \2-${pkgrel}|" Makefile
+diff --git a/core/linux-raspberrypi/rpi900-high-speed-serial.patch b/core/linux-raspberrypi/rpi900-high-speed-serial.patch
+new file mode 100644
+index 0000000..4836025
+--- /dev/null
++++ b/core/linux-raspberrypi/rpi900-high-speed-serial.patch
+@@ -0,0 +1,13 @@
++diff --git a/arch/arm/mach-bcm2708/include/mach/platform.h b/arch/arm/mach-bcm2708/include/mach/platform.h
++index 2e7e1bb..62a2ba8 100644
++--- a/arch/arm/mach-bcm2708/include/mach/platform.h
+++++ b/arch/arm/mach-bcm2708/include/mach/platform.h
++@@ -221,7 +221,7 @@
++ #define PM_RSTS_HADDRF_SET                                 0x00000002
++ #define PM_RSTS_HADDRQ_SET                                 0x00000001
++ 
++-#define UART0_CLOCK      3000000
+++#define UART0_CLOCK      12000000
++ 
++ #endif
++ 
+diff --git a/core/linux-raspberrypi/rpi900-pcf8523-i2c-register.patch b/core/linux-raspberrypi/rpi900-pcf8523-i2c-register.patch
+new file mode 100644
+index 0000000..3817af5
+--- /dev/null
++++ b/core/linux-raspberrypi/rpi900-pcf8523-i2c-register.patch
+@@ -0,0 +1,30 @@
++diff --git a/arch/arm/mach-bcm2708/bcm2708.c b/arch/arm/mach-bcm2708/bcm2708.c
++index 13b91de..390a3ff 100644
++--- a/arch/arm/mach-bcm2708/bcm2708.c
+++++ b/arch/arm/mach-bcm2708/bcm2708.c
++@@ -617,6 +617,12 @@ static struct platform_device bcm2835_thermal_device = {
++ 	.name = "bcm2835_thermal",
++ };
++ 
+++static struct i2c_board_info offboard_i2c_devices[] = {
+++	{
+++		I2C_BOARD_INFO("pcf8523", 0x68),
+++	},
+++};
+++
++ int __init bcm_register_device(struct platform_device *pdev)
++ {
++ 	int ret;
++@@ -754,6 +760,12 @@ void __init bcm2708_init(void)
++ 	spi_register_board_info(bcm2708_spi_devices,
++ 			ARRAY_SIZE(bcm2708_spi_devices));
++ #endif
+++
+++	/* test system revision to deterimine I2C bus number for GPIO header */
+++	i = system_rev < 4 ? 0 : 1;
+++	i2c_register_board_info(i, offboard_i2c_devices,
+++				ARRAY_SIZE(offboard_i2c_devices));
+++
++ }
++ 
++ static void timer_set_mode(enum clock_event_mode mode,

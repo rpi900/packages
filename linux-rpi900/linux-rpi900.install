@@ -1,0 +1,16 @@
+post_install () {
+	cat >> /boot/config.txt <<- EOF
+	
+	# linux-rpi900
+	init_uart_clock=12000000
+	EOF
+	echo ">>> Updating module dependencies. Please wait ..."
+	depmod ${1}-ARCH
+}
+post_upgrade() {
+	echo ">>> Updating module dependencies. Please wait ..."
+	depmod ${1}-ARCH
+}
+post_remove() {
+	sed -i '/^# linux-rpi900$/{N;s/.*\ninit_uart_clock=12000000$//}' /boot/config.txt
+}

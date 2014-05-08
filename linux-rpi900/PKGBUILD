@@ -1,0 +1,47 @@
+# Maintainer: Matthew Hollingworth <matthew@rpi900.com>
+pkgname=('linux-rpi900' 'linux-rpi900-headers')
+_commit=55f362b58322227ce7d3f57f335371c2a96be0b9
+pkgver=3.10.38
+pkgrel=1
+arch=('armv6h')
+url='http://rpi900.com'
+license=('GPL2')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'uboot-mkimage' 'python2' 'bc')
+options=('!strip')
+source=(
+	"PKGBUILDs-${_commit}.tar.gz::https://github.com/archlinuxarm/PKGBUILDs/archive/${_commit}.tar.gz"
+	'PKGBUILDs.patch'
+)
+md5sums=(
+	'd9dc86d8d5278d362f51c5d5a74b6178'
+	'eb833ee007b3b3a3b2d8dfee6bdc4f81'
+)
+prepare() {
+	cd "${srcdir}/PKGBUILDs-${_commit}"
+	patch -p1 -i "${srcdir}/PKGBUILDs.patch"
+	cd core/linux-raspberrypi
+	makepkg --nobuild
+}
+build() {
+	cd "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi"
+	env PKGEXT='.pkg.tar.xz' PKGDEST="${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi" makepkg --noextract --nosign --clean
+}
+package_linux-rpi900() {
+	pkgdesc='The Linux Kernel and modules - Raspberry Pi - patched for RPi900'
+	depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16')
+	optdepends=('crda: to set the correct wireless channels of your country')
+	provides=('kernel26' "linux=${pkgver}" "linux-raspberrypi=${pkgver}" 'aufs_friendly' 'dnt900')
+	conflicts=('kernel26' 'linux' 'linux-raspberrypi' 'dnt900')
+	install=linux-rpi900.install
+	cd "${pkgdir}"
+	bsdtar xf "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi/linux-raspberrypi-${pkgver}-${pkgrel}-armv6h.pkg.tar.xz"
+	rm -f .INSTALL .MTREE .PKGINFO
+}
+package_linux-rpi900-headers() {
+	pkgdesc='Header files and scripts for building modules for linux kernel - Raspberry Pi'
+	provides=('kernel26-headers' "linux-headers=${pkgver}" "linux-raspberrypi-headers=${pkgver}")
+	conflicts=('kernel26-headers' 'linux-raspberrypi-headers')
+	cd "${pkgdir}"
+	bsdtar xf "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi/linux-raspberrypi-headers-${pkgver}-${pkgrel}-armv6h.pkg.tar.xz"
+	rm -f .INSTALL .MTREE .PKGINFO
+}

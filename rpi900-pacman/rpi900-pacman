@@ -14,7 +14,7 @@ if [[ -f /run/rpi900-pacman.conf ]]; then
   echo ":: Mounting package repository on RPi900 base station..."
   mkdir -p /run/rpi900-pacman
   sshfs ${IPREMOTE?}:/var/cache/pacman/pkg /run/rpi900-pacman -o ro,async
-  pacman --config /etc/pacman.d/rpi900.conf "$@"
+  pacman --config /etc/pacman.d/rpi900-pacman.conf "$@"
   fusermount -u /run/rpi900-pacman
 else
   echo "not connected to RPi900 base station" 1>&2

@@ -27,7 +27,7 @@ Then on the remote:
 
     sudo rpi900-pacman -Syu
 
-The *rpi900-pacman* command uses its own *pacman* configuration file at `/etc/pacman.d/rpi900.conf`, including the custom repository. Add any *pacman* options you need to this file, just as you would normally with `/etc/pacman.conf`.
+The *rpi900-pacman* command uses its own *pacman* configuration file at `/etc/pacman.d/rpi900-pacman.conf`, including the custom repository. Add any *pacman* options you need to this file, just as you would normally with `/etc/pacman.conf`.
 
 Package Contents
 ================
@@ -35,7 +35,7 @@ Package Contents
 The package installs the following files:
 
 * `/usr/bin/rpi900-pacman`: the *rpi900-pacman* wrapper script.
-* `/etc/pacman.d/rpi900.conf`: the *pacman* configuration file used by *rpi900-pacman*.
+* `/etc/pacman.d/rpi900-pacman.conf`: the *pacman* configuration file used by *rpi900-pacman*.
 * `/etc/ppp/ip-up.d/99-rpi900-pacman-up.sh`: a script which records the IP address of the base RPi900 when the PPP link comes up.
 * `/etc/ppp/ip-down.d/99-rpi900-pacman-down.sh`: a corresponding script for when the link goes down.
 * `/usr/share/man/man8/rpi900-pacman.8.gz`: a *man* page.

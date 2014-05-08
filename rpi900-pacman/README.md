@@ -44,3 +44,4 @@ Release History
 ===============
 
 * 2014/05/01: version 0.1-1: initial release.
+* 2014/05/09: version 0.1-2: renamed pacman configuration file and base repository.

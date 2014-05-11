@@ -16,7 +16,33 @@ Refer to the [*rpirtscts*](rpirtscts/), [*linux-rpi900*](linux-rpi900/), [*rpi90
 Package Repository
 ==================
 
-**[May 9, 2014]** I intend to make these packages available in a dedicated *pacman* repository fairly soon. This will enable you to download the pre-built packages without building them yourself. Watch this space!
+Building the RPi900 packages is not necessary, as pre-built binaries are available. To use the RPi900 package repository, edit your `/etc/pacman.conf` file to add the extra repository as follows:
+
+    [rpi900]
+    Server = http://packages.rpi900.com
+
+Refresh the pacman package list to get and view the contents of the new repository:
+
+    $ sudo pacman -Sy
+    $ pacman -Sl rpi900
+    rpi900 linux-rpi900 3.10.38-1
+    rpi900 linux-rpi900-headers 3.10.38-1
+    rpi900 rpi900 1.0-1
+    rpi900 rpi900-pacman 0.1-2
+    rpi900 rpi900-ppp 0.1-3
+    rpi900 rpirtscts 1.0-1
+
+To download and install a package:
+
+    $ sudo pacman -S linux-rpi900
+
+If you're using package signing, you'll need to receive and trust my public key:
+
+    $ sudo pacman-key --recv-keys matthew@rpi900.com
+    $ sudo pacman-key --finger matthew@rpi900.com
+    $ sudo pacman-key --lsign-key matthew@rpi900.com
+
+My key fingerprint is `E091 7248 86A8 6C66 F558  69DD CCAD 90EE 1D35 B2D2` and should match the fingerprint produced above. My public key is also available [here](https://github.com/rpi900/packages/raw/master/rpi900.key).
 
 Releases
 ========

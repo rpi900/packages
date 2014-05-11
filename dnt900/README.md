@@ -8,7 +8,7 @@ The *dnt900* package installs the [DNT900 line discipline](https://github.com/mh
 Making the Package
 ==================
 
-You will first need to install some build tools and the linux kernel headers (required to compile the DNT900 line discipline module code):
+Pre-built packages are available&ndash;follow [these instructions](../packages#package-repository). To build the *dnt900* package yourself, you will first need to install some build tools and the linux kernel headers (required to compile the DNT900 line discipline module code):
 
     sudo pacman -S base-devel git linux-raspberrypi-headers
 

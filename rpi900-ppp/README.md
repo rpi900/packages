@@ -10,7 +10,7 @@ When the RPi900 is serving as a remote radio, the package provides an automatic 
 Making the Package
 ==================
 
-First install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*rpi900*](../rpi900/) package, which is required for an RPi900 base station and optional for a remote station. Finally, build and install the *rpi900-ppp* package in a like manner:
+Pre-built packages are available&ndash;follow [these instructions](../packages#package-repository). To build the *rpi900-ppp* package yourself, first install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*rpi900*](../rpi900/) package, which is required for an RPi900 base station and optional for a remote station. Finally, build and install the *rpi900-ppp* package in a like manner:
 
     cd ~/packages/rpi900-ppp
     makepkg --clean

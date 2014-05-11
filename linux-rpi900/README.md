@@ -10,7 +10,7 @@ The *linux-rpi900* package provides a custom linux kernel for RPi900. The kernel
 Making the Package
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../#package-repository). This is recommended for must users, since building the kernel package can be tedious!
+Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). This is recommended for must users, since building the kernel package can be tedious!
 
 Some dependencies are required to build the package. Install them as follows:
 

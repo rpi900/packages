@@ -6,7 +6,7 @@ This `PKGBUILD` and related files form a simple package for managing the [DNT900
 Making the Package
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../#package-repository). To build the *rpi900* package yourself, the following dependencies should first be installed:
+Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). To build the *rpi900* package yourself, the following dependencies should first be installed:
 
 * the [*rpirtscts*](../rpirtscts/) package; and
 * the [*linux-rpi900*](../linux-rpi900/) kernel package.

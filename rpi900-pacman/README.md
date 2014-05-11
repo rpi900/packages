@@ -8,7 +8,7 @@ The slow connection on a remote RPi900 can cause *pacman* to give 404 errors whe
 Making the Package
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../#package-repository). To build the *rpi900-pacman* package yourself, you will first need to have the [*rpi900-ppp*](../rpi900-ppp/) package and its dependencies running on your RPi900 system. Next, change to the *rpi900-pacman* package directory then build and install the package:
+Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). To build the *rpi900-pacman* package yourself, you will first need to have the [*rpi900-ppp*](../rpi900-ppp/) package and its dependencies running on your RPi900 system. Next, change to the *rpi900-pacman* package directory then build and install the package:
 
     cd ~/packages/rpi900-pacman
     makepkg --clean

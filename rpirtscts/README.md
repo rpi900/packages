@@ -6,7 +6,7 @@ This `PKGBUILD` creates a simple package to install the [*rpirtscts*](https://gi
 Making the Package
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../packages#package-repository). If you want to build *rpirtscts* yourself, some basic tools are required:
+Pre-built packages are available&ndash;follow [these instructions](../#package-repository). If you want to build *rpirtscts* yourself, some basic tools are required:
 
     sudo pacman -S base-devel git
 

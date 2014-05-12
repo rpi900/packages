@@ -1,19 +1,19 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=('linux-rpi900' 'linux-rpi900-headers')
-_commit=55f362b58322227ce7d3f57f335371c2a96be0b9
-pkgver=3.10.38
+_commit=3789bacf0e7a94e203a5b71bdb905a3aa8f391a8
+pkgver=3.12.19
 pkgrel=1
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'uboot-mkimage' 'python2' 'bc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'uboot-mkimage' 'git' 'python2' 'bc')
 options=('!strip')
 source=(
 	"PKGBUILDs-${_commit}.tar.gz::https://github.com/archlinuxarm/PKGBUILDs/archive/${_commit}.tar.gz"
 	'PKGBUILDs.patch'
 )
 md5sums=(
-	'd9dc86d8d5278d362f51c5d5a74b6178'
+	'd6f79a536296880f9cecd160dba7eed5'
 	'eb833ee007b3b3a3b2d8dfee6bdc4f81'
 )
 prepare() {
@@ -39,8 +39,8 @@ package_linux-rpi900() {
 }
 package_linux-rpi900-headers() {
 	pkgdesc='Header files and scripts for building modules for linux kernel - Raspberry Pi'
-	provides=('kernel26-headers' "linux-headers=${pkgver}" "linux-raspberrypi-headers=${pkgver}")
-	conflicts=('kernel26-headers' 'linux-raspberrypi-headers')
+	provides=("linux-headers=${pkgver}" "linux-raspberrypi-headers=${pkgver}")
+	conflicts=('linux-headers' 'linux-raspberrypi-headers')
 	cd "${pkgdir}"
 	bsdtar xf "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi/linux-raspberrypi-headers-${pkgver}-${pkgrel}-armv6h.pkg.tar.xz"
 	rm -f .INSTALL .MTREE .PKGINFO

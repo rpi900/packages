@@ -69,3 +69,4 @@ Release History
 This package will be versioned as per the [*standard kernel*](https://github.com/archlinuxarm/PKGBUILDs/tree/master/core/linux-raspberrypi), however updates are likely to be less frequent.
 
 * 2014/05/09: version 3.10.18-1: initial release.
+* 2014/05/12: version 3.12.19-1

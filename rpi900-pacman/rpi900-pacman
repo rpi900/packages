@@ -9,7 +9,7 @@ if [[ -f /run/rpi900-pacman.conf ]]; then
   done
   if [[ $SYNCH && $REFRESH ]]; then
     echo ":: Updating package database on RPi900 base station..."
-    ssh ${IPREMOTE?} 'repo-add -n /var/cache/pacman/pkg/base.db.tar.gz `find /var/cache/pacman/pkg/*.pkg.tar.xz -cnewer /var/cache/pacman/pkg/base.db.tar.gz 2>/dev/null || find /var/cache/pacman/pkg/*.pkg.tar.xz`'
+    ssh ${IPREMOTE?} 'repo-add -n /var/cache/pacman/pkg/base.db.tar.gz `find /var/cache/pacman/pkg/*.pkg.tar.xz -cnewer /var/cache/pacman/pkg/base.db.tar.gz 2>/dev/null || find /var/cache/pacman/pkg/*.pkg.tar.xz` || true'
   fi
   echo ":: Mounting package repository on RPi900 base station..."
   mkdir -p /run/rpi900-pacman

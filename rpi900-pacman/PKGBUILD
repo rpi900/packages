@@ -1,7 +1,7 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900-pacman
 pkgver=0.1
-pkgrel=2
+pkgrel=3
 pkgdesc='alternate pacman configuration for remote RPi900'
 arch=('armv6h')
 url='http://rpi900.com'

@@ -41,7 +41,7 @@ With the new kernel your Raspberry Pi should still operate as normal. The kernel
 
 The DNT900 line discipline (number 29) should also be available for use:
 
-    $ cat /proc/ldiscs
+    $ cat /proc/tty/ldiscs
     n_tty       0
     dnt900     29
 

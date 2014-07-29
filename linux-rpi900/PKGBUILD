@@ -1,8 +1,8 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=('linux-rpi900' 'linux-rpi900-headers')
-_commit=0c58328ee99c3d7a34fb37080f417d24078ac790
-pkgver=3.12.19
-pkgrel=3
+_commit=48946982f9bbde21a7016283a20ffa96c20f8fae
+pkgver=3.12.24
+pkgrel=1
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL2')
@@ -13,7 +13,7 @@ source=(
 	'PKGBUILDs.patch'
 )
 md5sums=(
-	'1f997028904c7c7175cb12a94ecaa8af'
+	'd53a9dfeef99fd2f913d46abe618ae82'
 	'eb833ee007b3b3a3b2d8dfee6bdc4f81'
 )
 prepare() {

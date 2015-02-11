@@ -1,20 +1,20 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=('linux-rpi900' 'linux-rpi900-headers')
-_commit=4de84d0589197dc12ac3fc8aa877b1793b3c845f
-pkgver=3.12.35
+_commit=bb9ab5360feff94f306db16956c94c318cdea559
+pkgver=3.18.6
 pkgrel=1
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL2')
-makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'uboot-mkimage' 'git' 'python2' 'bc')
+makedepends=('xmlto' 'docbook-xsl' 'kmod' 'inetutils' 'bc' 'git')
 options=('!strip')
 source=(
 	"PKGBUILDs-${_commit}.tar.gz::https://github.com/archlinuxarm/PKGBUILDs/archive/${_commit}.tar.gz"
 	'PKGBUILDs.patch'
 )
 md5sums=(
-	'942eed58cc8e9e0156626d1b6532c480'
-	'eb833ee007b3b3a3b2d8dfee6bdc4f81'
+	'c32db930d8a626c6909f8bb37559dd50'
+	'684cc962d89e7de1348027718d77ffe2'
 )
 prepare() {
 	cd "${srcdir}/PKGBUILDs-${_commit}"

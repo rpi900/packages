@@ -2,30 +2,30 @@ diff --git a/core/linux-raspberrypi/PKGBUILD b/core/linux-raspberrypi/PKGBUILD
 index 72f6c1a..645ff2c 100644
 --- a/core/linux-raspberrypi/PKGBUILD
 +++ b/core/linux-raspberrypi/PKGBUILD
-@@ -19,6 +19,9 @@ source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
-         'config'
-         'change-default-console-loglevel.patch'
-         'args-uncompressed.txt'
+@@ -27,6 +27,9 @@ source=("https://github.com/raspberrypi/linux/archive/${_commit}.tar.gz"
+         "ftp://teambelgium.net/bfq/patches/${pkgver:0:4}.0-${bfqver}/0003-block-bfq-add-Early-Queue-Merge-EQM-to-BFQ-${bfqver}-for-${pkgver:0:4}.0.patch"
+         'https://github.com/raspberrypi/tools/raw/master/mkimage/mkknlimg'
+         'config.txt'
 +        'rpi900-pcf8523-i2c-register.patch'
 +        'rpi900-high-speed-serial.patch'
 +        'dnt900-0.3.4.tar.gz::https://github.com/mholling/dnt900/archive/v0.3.4.tar.gz'
-         'boot-uncompressed.txt'
-         'imagetool-uncompressed.py'
-         "git://git.code.sf.net/p/aufs/aufs3-standalone#branch=aufs${pkgver%.*}.x"
-@@ -28,6 +31,9 @@ md5sums=('dd4f412940e328603fcb0aa72ac37a8e'
-          '66f294e4a634498f095aa5776bc0488c'
-          '9d3c56a4b999c8bfbd4018089a62f662'
-          '9335d1263fd426215db69841a380ea26'
+         'cmdline.txt'
+         'config.v6'
+         'config.v7')
+@@ -37,6 +40,9 @@ md5sums=('dd4f412940e328603fcb0aa72ac37a8e'
+          '8f2743651280f5a022e541f4e95e5546'
+          '405015cdeb544575c25018b3487a2e76'
+          '06239aa575a15eb6024275864dfcc691'
 +         'f9719bb692f28c6e47bf1559783115ee'
 +         '031562687b42f794bb62d3a4541e18d9'
 +         '75091299a5cb672f47891b20d0fe22b2'
-          'a00e424e2fbb8c5a5f77ba2c4871bed4'
-          '2f82dbe5752af65ff409d737caf11954'
-          'SKIP'
-@@ -60,6 +66,14 @@ prepare() {
-   patch -Np1 -i ../aufs3-standalone/aufs3-standalone.patch
- 
-   cat "${srcdir}/config" > ./.config
+          '60bc3624123c183305677097bcd56212'
+          '1fd3e912a506c65749dcc11702a25444'
+          '5c689ca92ca4d4b564c9897ad1bb177a')
+@@ -63,6 +69,14 @@ prepare() {
+ msg "Prepare to build"
+   [[ $CARCH == "armv6h" ]] && cat "${srcdir}/config.v6" > ./.config
+   [[ $CARCH == "armv7h" ]] && cat "${srcdir}/config.v7" > ./.config
 +  sed -i '/CONFIG_I2C_CHARDEV=/s/m/y/' .config
 +  sed -i '/CONFIG_I2C_BCM2708=/s/m/y/' .config
 +  sed -i '/CONFIG_RTC_DRV_PCF8523=/s/m/y/' .config

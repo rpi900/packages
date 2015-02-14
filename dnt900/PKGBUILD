@@ -1,20 +1,20 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=dnt900
-pkgver=0.3.4
-pkgrel=2
+pkgver=0.3.5
+pkgrel=1
 pkgdesc='DNT900 line discipline module'
 arch=('armv6h') # TODO: add others?
 url='https://github.com/mholling/dnt900'
 license=('GPL')
-depends=('linux>=3.10.18')
-makedepends=('linux-headers>=3.10.18')
+depends=('linux>=3.18.3')
+makedepends=('linux-headers>=3.18.3')
 conflicts=('linux-rpi900')
 install=dnt900.install
 source=(
   "dnt900-${pkgver}.tar.gz::https://github.com/mholling/dnt900/archive/v${pkgver}.tar.gz"
 )
 md5sums=(
-  '75091299a5cb672f47891b20d0fe22b2'
+  'ec1ca90b907f05f0f614193d1a2a4da2'
 )
 build() {
   cd "${srcdir}/dnt900-${pkgver}"

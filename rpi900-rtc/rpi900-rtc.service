@@ -1,0 +1,12 @@
+[Unit]
+Description=RPi900 real-time clock synchronisation
+After=dev-rtc0.device
+Wants=time-sync.target
+Before=time-sync.target
+
+[Service]
+ExecStart=/usr/bin/hwclock --hctosys
+Type=oneshot
+
+[Install]
+WantedBy=multi-user.target

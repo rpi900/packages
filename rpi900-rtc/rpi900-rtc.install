@@ -1,0 +1,17 @@
+post_install() {
+	systemctl daemon-reload
+	systemctl enable rpi900-rtc.service
+	cat >> /boot/config.txt <<- EOF
+	
+	# rpi900-rtc
+	device_tree_overlay=pcf8523-rtc
+	EOF
+}
+post_upgrade() {
+	systemctl daemon-reload
+}
+post_remove() {
+	sed -i '/^# rpi900-rtc$/{N;s/.*\device_tree_overlay=pcf8523-rtc$//}' /boot/config.txt
+	systemctl disable rpi900-rtc.service
+	systemctl daemon-reload
+}

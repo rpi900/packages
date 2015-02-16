@@ -5,16 +5,12 @@ This package installs an automatic [PPP](http://en.wikipedia.org/wiki/Point-to-p
 
 When the RPi900 is serving as a network-connected base station, the package provides an automatic network connection to any remote RPi900s which connect to the base radio. This includes the necessary setup of [routing](http://en.wikipedia.org/wiki/IP_forwarding) and [DNS](http://en.wikipedia.org/wiki/DNS) so that the remote radio may be fully networked using only the DNT900 radio link.
 
-When the RPi900 is serving as a remote radio, the package provides an automatic network connection via the base radio to which the remote radio is connected. For a remote RPi900, the connection can be made with or without the DNT900 line discipline (the [*rpi900*](../rpi900/) package) installed.
+When the RPi900 is serving as a remote radio, the package provides an automatic network connection via the base radio to which the remote radio is connected. For a remote RPi900, the connection can be made with or without the DNT900 line discipline installed.
 
-Making the Package
-==================
+Dependencies
+============
 
-Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). To build the *rpi900-ppp* package yourself, first install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*rpi900*](../rpi900/) package, which is required for an RPi900 base station and optional for a remote station. Finally, build and install the *rpi900-ppp* package in a like manner:
-
-    cd ~/packages/rpi900-ppp
-    makepkg --clean
-    sudo pacman -U rpi900-ppp-0.1-3-armv6h.pkg.tar.xz
+Prior to building and installing this package, you should first install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*dnt900*](../dnt900/) and [*rpi900*](../rpi900/) packages, which are required for an RPi900 base station and optional for a remote station.
 
 Configuration
 =============

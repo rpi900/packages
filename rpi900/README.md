@@ -3,21 +3,13 @@ Summary (version 1.0-2)
 
 This `PKGBUILD` and related files form a simple package for managing the [DNT900 line discipline](https://github.com/mholling/dnt900) on RPi900. A service is provided for automatically attaching the line discipline to the Raspberry Pi's `ttyAMA0` serial port during system startup.
 
-Making the Package
+Dependencies
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). To build the *rpi900* package yourself, the following dependencies should first be installed:
+The following dependencies should first be installed:
 
-* the [*rpirtscts*](../rpirtscts/) package; and
-* the [*linux-rpi900*](../linux-rpi900/) kernel package.
-
-(If you have a reason for doing so, it is possible to keep the vanilla *linux-raspberrypi* kernel and instead install the [*dnt900*](../dnt900/) package to get the DNT900 line discipline on its own.)
-
-Finally, change to the *rpi900* package directory then make and install the package:
-
-    cd ~/packages/rpi900
-    makepkg --clean
-    sudo pacman -U rpi900-1.0-2-armv6h.pkg.tar.xz
+* the [*rpirtscts*](../rpirtscts/) utility; and
+* the [*dnt900*](../linux-rpi900/) line discipline.
 
 Operation
 =========

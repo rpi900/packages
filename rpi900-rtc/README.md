@@ -3,15 +3,6 @@ Summary (version 1.0-1)
 
 This `PKGBUILD` and related files form a simple package for enabling the [PCF8523](http://www.nxp.com/products/interface_and_connectivity/real_time_clocks/i2c_real_time_clocks_rtc/series/PCF8523.html) real-time clock on RPi900 boards. A service is provided for automatically synchronising the Raspberry Pi system clock to the real-time clock during system startup.
 
-Making the Package
-==================
-
-To build the *rpi900-rtc* package, simply change to the *rpi900-rtc* package directory then use `makepkg` to build and `pacman` to install:
-
-    cd ~/packages/rpi900-rtc
-    makepkg --clean
-    sudo pacman -U rpi900-rtc-1.0-1-armv6h.pkg.tar.xz
-
 Operation
 =========
 

@@ -10,7 +10,7 @@ The *linux-rpi900* package provides a custom linux kernel for RPi900. The kernel
 Deprecation
 ===========
 
-**N.B.** This package is **deprecated**, and I am no longer updating it. In preference, install the standard `linux-raspberrpi` kernel package. Add the [`rpi900-rtc`](../rpi900-rtc) package to obtain real-time clock functionality, and build your own [`dnt900`](../dnt900) package to add the DNT900 line discipline to your system as a module. Although serial rates above 115200 bps are not available without the custom kernel, this turns out not a limitation in practice, since overall throughput of the radio does not generally exceed this rate.
+**N.B.** This package is **deprecated**, and I am no longer updating it. In preference, install the standard `linux-raspberrpi` kernel package. Add the [`rpi900-rtc`](../rpi900-rtc/) package to obtain real-time clock functionality, and build your own [`dnt900`](../dnt900/) package to add the DNT900 line discipline to your system as a module. Although serial rates above 115200 bps are not available without the custom kernel, this turns out not a limitation in practice, since overall throughput of the radio does not generally exceed this rate.
 
 If you are uninstalling the `linux-rpi900` package in favour of the standard Raspberry Pi kernel, be sure to first change your radio's serial rate back down to 115200 bps or lower (if it's not already). Otherwise, you will no longer be able to connect to the radio to change this setting.
 

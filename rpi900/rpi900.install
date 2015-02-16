@@ -4,6 +4,7 @@ post_install() {
   systemctl enable rpi900.service
   sed -i.old 's/console=ttyAMA0,[0-9]*//g' /boot/cmdline.txt
   sed -i     's/kgdboc=ttyAMA0,[0-9]*//g'  /boot/cmdline.txt
+  systemctl disable serial-getty@ttyAMA0.service
   echo ">>> Remember to set the serial speed in /etc/rpi900.conf"
 }
 post_upgrade() {

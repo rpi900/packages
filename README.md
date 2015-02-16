@@ -64,6 +64,6 @@ Releases
 I intend that the master branch always have the latest stable packages, with any new work in a development branch. With any new features I will bump the package version or release number of the package (`pkgver` and `pkgrel` respectively in the `PKGBUILD` file). Find your current package version and release numbers as follows:
 
     pacman -Q rpirtscts     # => rpirtscts 1.0-1
-    pacman -Q dnt900        # => dnt900 .3.5-1
+    pacman -Q dnt900        # => dnt900 0.3.5-1
     pacman -Q rpi900        # => rpi900 1.0-2
     pacman -Q rpi900-ppp    # => rpi900-ppp 0.1-2

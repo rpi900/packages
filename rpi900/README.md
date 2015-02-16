@@ -1,4 +1,4 @@
-Summary (version 1.0-1)
+Summary (version 1.0-2)
 =========================
 
 This `PKGBUILD` and related files form a simple package for managing the [DNT900 line discipline](https://github.com/mholling/dnt900) on RPi900. A service is provided for automatically attaching the line discipline to the Raspberry Pi's `ttyAMA0` serial port during system startup.
@@ -17,7 +17,7 @@ Finally, change to the *rpi900* package directory then make and install the pack
 
     cd ~/packages/rpi900
     makepkg --clean
-    sudo pacman -U rpi900-1.0-1-armv6h.pkg.tar.xz
+    sudo pacman -U rpi900-1.0-2-armv6h.pkg.tar.xz
 
 Operation
 =========
@@ -27,6 +27,8 @@ During package installation you will receive a reminder to set the serial speed 
     sudo nano /etc/rpi900.conf
 
 The default rate of 9600 bits/second corresponds to the default rate of the DNT900 radio.
+
+During installation, your `/boot/cmdline.txt` is modified to remove the `console` and `kgdboc` on `ttyAMA0`, and the `serial-getty@ttyAMA0` service is also disabled. (This is required to free up the serial port for use by the DNT900 radio.)
 
 The package provides a [*systemd service*](http://crashmag.net/useful-systemd-commands) to control the line discipline. Control the service as follows:
 
@@ -70,3 +72,4 @@ Release History
 * 2014/04/22: version 0.3.4-1: initial release.
 * 2014/04/28: version 0.3.4-2: move rpirtscts to separate package and add as dependency.
 * 2014/05/09: version 1.0-1: extract dnt900 module to separate package.
+* 2015/02/16: version 1.0-2: automatically remove conflicting ttyAMA0 usage.

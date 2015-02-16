@@ -1,7 +1,7 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='DNT900 line discipline service for RPi900'
 arch=('armv6h')
 url='http://rpi900.com'

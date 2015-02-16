@@ -7,10 +7,17 @@ The *linux-rpi900* package provides a custom linux kernel for RPi900. The kernel
 * high-speed serial support on `ttyAMA0`
 * the [DNT900 line discipline](https://github.com/mholling/dnt900)
 
+Deprecation
+===========
+
+**N.B.** This package is **deprecated**, and I am no longer updating it. In preference, install the standard `linux-raspberrpi` kernel package. Add the [`rpi900-rtc`](../rpi900-rtc) package to obtain real-time clock functionality, and build your own [`dnt900`](../dnt900) package to add the DNT900 line discipline to your system as a module. Although serial rates above 115200 bps are not available without the custom kernel, this turns out not a limitation in practice, since overall throughput of the radio does not generally exceed this rate.
+
+If you are uninstalling the `linux-rpi900` package in favour of the standard Raspberry Pi kernel, be sure to first change your radio's serial rate back down to 115200 bps or lower (if it's not already). Otherwise, you will no longer be able to connect to the radio to change this setting.
+
 Making the Package
 ==================
 
-Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository). This is recommended for must users, since building the kernel package can be tedious!
+<span style="text-decoration: line-through">Pre-built packages are available&ndash;follow [these instructions](../README.md#package-repository).</span>
 
 Some dependencies are required to build the package. Install them as follows:
 
@@ -26,8 +33,8 @@ On a Raspberry Pi the process is very slow, easily taking twelve hours or more. 
 
 When the kernel package has been built, install it (and optionally the headers package) as follows:
 
-    $ sudo pacman -U linux-rpi900-3.10.18-1-armv6h.pkg.tar.xz
-    $ sudo pacman -U linux-rpi900-headers-3.10.18-1-armv6h.pkg.tar.xz
+    $ sudo pacman -U linux-rpi900-3.18.7-3-armv6h.pkg.tar.xz
+    $ sudo pacman -U linux-rpi900-headers-3.18.7-3-armv6h.pkg.tar.xz
 
 Since the package conflicts with the standard *linux-raspberrypi* kernel, you will be prompted to remove it. To run the new kernel, a reboot is required following installation.
 
@@ -37,7 +44,7 @@ Operation
 With the new kernel your Raspberry Pi should still operate as normal. The kernel version can be verified as follows:
 
     $ uname -r
-    3.10.38-1-ARCH
+    3.18.7-3-ARCH
 
 The DNT900 line discipline (number 29) should also be available for use:
 
@@ -70,3 +77,6 @@ This package will be versioned as per the [*standard kernel*](https://github.com
 
 * 2014/05/09: version 3.10.18-1: initial release.
 * 2014/05/12: version 3.12.19-1
+* 2014/07/29: version 3.12.24-1
+* 2015/01/03: version 3.12.35-1
+* 2015/02/15: version 3.18.7-3 and deprecation.

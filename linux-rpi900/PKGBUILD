@@ -1,8 +1,8 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=('linux-rpi900' 'linux-rpi900-headers')
-_commit=bb9ab5360feff94f306db16956c94c318cdea559
-pkgver=3.18.6
-pkgrel=1
+_commit=af56bd8703ea1c55e670a7fc9f06b3f79018add6
+pkgver=3.18.7
+pkgrel=3
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL2')
@@ -13,8 +13,8 @@ source=(
 	'PKGBUILDs.patch'
 )
 md5sums=(
-	'c32db930d8a626c6909f8bb37559dd50'
-	'684cc962d89e7de1348027718d77ffe2'
+	'e2f7ed69e5ed4acbbed63542dbe6f08c'
+	'05da0e5c3f965d7737eafc2c6ca0d078'
 )
 prepare() {
 	cd "${srcdir}/PKGBUILDs-${_commit}"
@@ -30,8 +30,10 @@ package_linux-rpi900() {
 	pkgdesc='The Linux Kernel and modules - Raspberry Pi - patched for RPi900'
 	depends=('coreutils' 'linux-firmware' 'module-init-tools>=3.16')
 	optdepends=('crda: to set the correct wireless channels of your country')
-	provides=('kernel26' "linux=${pkgver}" "linux-raspberrypi=${pkgver}" 'aufs_friendly' 'dnt900')
-	conflicts=('kernel26' 'linux' 'linux-raspberrypi' 'dnt900')
+	provides=('kernel26' "linux=${pkgver}" "linux-raspberrypi=${pkgver}" 'aufs_friendly' 'dnt900' 'rpi900-rtc')
+	conflicts=('kernel26' 'linux' 'linux-raspberrypi' 'dnt900' 'rpi900-rtc')
+	backup=('boot/config.txt' 'boot/cmdline.txt')
+	replaces=('linux-raspberrypi-latest')
 	install=linux-rpi900.install
 	cd "${pkgdir}"
 	bsdtar xf "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi/linux-raspberrypi-${pkgver}-${pkgrel}-armv6h.pkg.tar.xz"
@@ -41,6 +43,7 @@ package_linux-rpi900-headers() {
 	pkgdesc='Header files and scripts for building modules for linux kernel - Raspberry Pi'
 	provides=("linux-headers=${pkgver}" "linux-raspberrypi-headers=${pkgver}")
 	conflicts=('linux-headers' 'linux-raspberrypi-headers')
+	replaces=('linux-raspberrypi-latest-headers')
 	cd "${pkgdir}"
 	bsdtar xf "${srcdir}/PKGBUILDs-${_commit}/core/linux-raspberrypi/linux-raspberrypi-headers-${pkgver}-${pkgrel}-armv6h.pkg.tar.xz"
 	rm -f .INSTALL .MTREE .PKGINFO

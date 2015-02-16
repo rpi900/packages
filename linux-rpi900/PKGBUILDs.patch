@@ -8,20 +8,20 @@ index 72f6c1a..645ff2c 100644
          'config.txt'
 +        'rpi900-pcf8523-i2c-register.patch'
 +        'rpi900-high-speed-serial.patch'
-+        'dnt900-0.3.4.tar.gz::https://github.com/mholling/dnt900/archive/v0.3.4.tar.gz'
++        'dnt900-0.3.5.tar.gz::https://github.com/mholling/dnt900/archive/v0.3.5.tar.gz'
          'cmdline.txt'
          'config.v6'
          'config.v7')
 @@ -37,6 +40,9 @@ md5sums=('dd4f412940e328603fcb0aa72ac37a8e'
           '8f2743651280f5a022e541f4e95e5546'
           '405015cdeb544575c25018b3487a2e76'
-          '06239aa575a15eb6024275864dfcc691'
+          '74f15f615923836da8c5b7e9af26714d'
 +         'f9719bb692f28c6e47bf1559783115ee'
 +         '031562687b42f794bb62d3a4541e18d9'
-+         '75091299a5cb672f47891b20d0fe22b2'
++         'ec1ca90b907f05f0f614193d1a2a4da2'
           '60bc3624123c183305677097bcd56212'
-          '1fd3e912a506c65749dcc11702a25444'
-          '5c689ca92ca4d4b564c9897ad1bb177a')
+          '05a8919cc2ce7211db9235b7cd82d93a'
+          '3bde46c51108d218ec60fd8f5db2aa40')
 @@ -63,6 +69,14 @@ prepare() {
  msg "Prepare to build"
    [[ $CARCH == "armv6h" ]] && cat "${srcdir}/config.v6" > ./.config
@@ -32,7 +32,7 @@ index 72f6c1a..645ff2c 100644
 +  sed -i 's/# CONFIG_RTC_HCTOSYS is not set/CONFIG_RTC_HCTOSYS=y/' .config
 +  patch -Np1 -i "${srcdir}/rpi900-pcf8523-i2c-register.patch"
 +  patch -Np1 -i "${srcdir}/rpi900-high-speed-serial.patch"
-+  cp "${srcdir}/dnt900-0.3.4/dnt900.c" drivers/tty/
++  cp "${srcdir}/dnt900-0.3.5/dnt900.c" drivers/tty/
 +  echo 'obj-y += dnt900.o' >> drivers/tty/Makefile
  
    # add pkgrel to extraversion

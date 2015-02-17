@@ -1,26 +1,27 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=dnt900
-pkgver=0.3.5
-pkgrel=2
+_dnt900_ver='0.3.5'
+pkgver=$(pacman -Q linux-raspberrypi | sed 's/linux-raspberrypi \([0-9\.]*\)-\([0-9]*\)/\1/')
+pkgrel=$(pacman -Q linux-raspberrypi | sed 's/linux-raspberrypi \([0-9\.]*\)-\([0-9]*\)/\2/')
 pkgdesc='DNT900 line discipline module'
 arch=('armv6h') # TODO: add others?
 url='https://github.com/mholling/dnt900'
 license=('GPL')
-depends=('linux>=3.18.3')
-makedepends=("linux-headers=$(uname -r | sed 's/\([0-9\.]*\).*/\1/')")
+depends=('linux-raspberrypi>=3.18.3' "linux-raspberrypi=${pkgver}-${pkgrel}")
+makedepends=("linux-raspberrypi-headers=${pkgver}-${pkgrel}")
 conflicts=('linux-rpi900')
 install=dnt900.install
 source=(
-  "dnt900-${pkgver}.tar.gz::https://github.com/mholling/dnt900/archive/v${pkgver}.tar.gz"
+  "dnt900-${_dnt900_ver}.tar.gz::https://github.com/mholling/dnt900/archive/v${_dnt900_ver}.tar.gz"
 )
 md5sums=(
   'ec1ca90b907f05f0f614193d1a2a4da2'
 )
 build() {
-  cd "${srcdir}/dnt900-${pkgver}"
-  make
+  cd "${srcdir}/dnt900-${_dnt900_ver}"
+  KSRC="/usr/lib/modules/${pkgver}-${pkgrel}-ARCH/build/" make
 }
 package() {
-  cd "${srcdir}/dnt900-${pkgver}"
-  DESTDIR="${pkgdir}/usr" make modules_install
+  cd "${srcdir}/dnt900-${_dnt900_ver}"
+  KSRC="/usr/lib/modules/${pkgver}-${pkgrel}-ARCH/build/" DESTDIR="${pkgdir}/usr" make modules_install
 }

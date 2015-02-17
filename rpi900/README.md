@@ -8,7 +8,7 @@ Dependencies
 
 The following dependencies should first be installed:
 
-* the [*rpirtscts*](../rpirtscts/) utility; and
+* the [*rpirtscts*](../rpirtscts/) utility
 
 Operation
 =========

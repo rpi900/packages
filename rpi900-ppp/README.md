@@ -10,7 +10,7 @@ When the RPi900 is serving as a remote radio, the package provides an automatic 
 Dependencies
 ============
 
-Prior to building and installing this package, you should first install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*dnt900*](../dnt900/) and [*rpi900*](../rpi900/) packages, which are required for an RPi900 base station and optional for a remote station.
+Prior to building and installing this package, you should first install the [*rpirtscts*](../rpirtscts/) dependency. You can also install the [*rpi900*](../rpi900/) package, which is required for an RPi900 base station and optional for a remote station.
 
 Configuration
 =============

@@ -5,14 +5,13 @@ This repository hosts *packages* for Arch Linux ARM when used with [Raspberry Pi
 
 * The [*rpirtscts*](rpirtscts/) package installs the [*rpirtscts*](https://github.com/mholling/rpirtscts) flow-control utility.
 * The [*rpi900-rtc*](rpi900-rtc/) package adds a startup service to synchronise system time with the RPi900's built-in PCF8523 real-time clock.
-* The [*dnt900*](dnt900/) package installs the [DNT900 line discipline](https://github.com/mholling/dnt900) as a kernel module.
-* The [*rpi900*](rpi900/) package installs a systemd service for automatically attaching the DNT900 line discipline to the Raspberry Pi's `ttyAMA0` serial port at startup.
+* The [*rpi900*](rpi900/) package installs the [DNT900 line discipline](https://github.com/mholling/dnt900) kernel module, and a systemd service for automatically attaching the line discipline to the Raspberry Pi's `ttyAMA0` serial port at startup.
 * The [*rpi900-ppp*](rpi900-ppp/) package provides a set of udev rules and systemd services for starting a [PPP](http://en.wikipedia.org/wiki/Point-to-point_protocol) connection over the DNT900 radio link. Collectively, these files automatically configure an RPi900 system to provide or obtain an internet connection using the radio.
 * The [*rpi900-pacman*](rpi900-pacman/) package provides a wrapper for the [*pacman*](https://wiki.archlinux.org/index.php/pacman) package manager, configured specifically for RPi900 remote stations connected via PPP to an RPi900 base station.
 
 The packages are simple to build and install with the [*pacman*](https://wiki.archlinux.org/index.php/pacman) package manager. Minimal editing of configuration files is all that is needed to achieve a working system.
 
-Refer to the [*rpirtscts*](rpirtscts/), [*rpi900-rtc*](rpi900-rtc/), [*dnt900*](dnt900/), [*rpi900*](rpi900/) and [*rpi900-ppp*](rpi900-ppp/) directories for detailed instructions on use of the respective packages.
+Refer to the [*rpirtscts*](rpirtscts/), [*rpi900-rtc*](rpi900-rtc/), [*rpi900*](rpi900/) and [*rpi900-ppp*](rpi900-ppp/) directories for detailed instructions on use of the respective packages.
 
 Building Packages
 =================
@@ -28,9 +27,9 @@ Next, use `git` to clone the RPi900 package files:
 
 For each package you wish to install, move into the directory, build the package with `makepkg` and install it with `pacman`. For example:
 
-    cd packages/dnt900
+    cd packages/rpirtscts
     makepkg --clean
-    sudo pacman -U dnt900-0.3.5-1-armv6h.pkg.tar.xz
+    sudo pacman -U rpirtscts-1.0-1-armv6h.pkg.tar.xz
 
 (Some packages will require a reboot before they come into effect.)
 
@@ -45,13 +44,13 @@ For RPi900 users wishing to get started quickly with their radios, the following
     cd packages/rpirtscts
     makepkg --clean
     sudo pacman -U rpirtscts-1.0-1-armv6h.pkg.tar.xz
-    cd ../dnt900
-    makepkg --clean
-    sudo pacman -U dnt900-0.3.5-1-armv6h.pkg.tar.xz
     cd ../rpi900
     makepkg --clean
-    sudo pacman -U rpi900-1.0-2-armv6h.pkg.tar.xz
+    sudo pacman -U rpi900-3.18.7-4-armv6h.pkg.tar.xz
     sudo nano /etc/rpi900.conf  # if necessary
+
+Then, check the system log, and examine some radio registers:
+
     sudo reboot
     dmesg | grep dnt900
     cat /sys/devices/virtual/dnt900/ttyAMA0/0x....../MacAddress
@@ -61,9 +60,8 @@ Be sure to read to documentation more closely as you familiarise yourself with R
 Releases
 ========
 
-I intend that the master branch always have the latest stable packages, with any new work in a development branch. With any new features I will bump the package version or release number of the package (`pkgver` and `pkgrel` respectively in the `PKGBUILD` file). Find your current package version and release numbers as follows:
+I intend that the master branch always have the latest stable packages, with any new work in a development branch. With any new features I will bump the package version or release number of the package (`pkgver` and `pkgrel` respectively in the `PKGBUILD` file). The exception is the *rpi900* package, which tracks the kernel version. Find your current package version and release numbers as follows:
 
     pacman -Q rpirtscts     # => rpirtscts 1.0-1
-    pacman -Q dnt900        # => dnt900 0.3.5-1
-    pacman -Q rpi900        # => rpi900 1.0-2
+    pacman -Q rpi900        # => rpi900 3.18.7-4
     pacman -Q rpi900-ppp    # => rpi900-ppp 0.1-2

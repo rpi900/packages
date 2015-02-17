@@ -1,18 +1,37 @@
+_add_config() {
+	cat >> /boot/config.txt <<- EOF
+	
+	# rpi900
+	init_uart_clock=12000000
+	EOF
+}
 post_install() {
-  systemctl daemon-reload
-  udevadm control --reload
-  systemctl enable rpi900.service
-  sed -i.old 's/console=ttyAMA0,[0-9]*//g' /boot/cmdline.txt
-  sed -i     's/kgdboc=ttyAMA0,[0-9]*//g'  /boot/cmdline.txt
-  systemctl disable serial-getty@ttyAMA0.service
-  echo ">>> Remember to set the serial speed in /etc/rpi900.conf"
+	echo ">>> Updating module dependencies. Please wait ..."
+	depmod ${1}-ARCH
+	systemctl daemon-reload
+	udevadm control --reload
+	systemctl -q enable rpi900.service
+	sed -i.old 's/console=ttyAMA0,[0-9]*//g' /boot/cmdline.txt
+	sed -i     's/kgdboc=ttyAMA0,[0-9]*//g'  /boot/cmdline.txt
+	systemctl disable serial-getty@ttyAMA0.service
+	_add_config
+	echo ">>> Remember to rebuild and reinstall this package after a kernel upgrade."
+	echo ">>> Remember to set the serial speed in /etc/rpi900.conf"
 }
 post_upgrade() {
-  systemctl daemon-reload
-  udevadm control --reload
+	echo ">>> Updating module dependencies. Please wait ..."
+	depmod ${1}-ARCH
+	systemctl daemon-reload
+	udevadm control --reload
+	if [[ ! ${2} > 1.0-2 ]]; then
+		_add_config
+	fi
 }
 post_remove() {
-  systemctl disable rpi900.service
-  systemctl daemon-reload
-  udevadm control --reload
+	echo ">>> Updating module dependencies. Please wait ..."
+	depmod ${1}-ARCH
+	systemctl -q disable rpi900.service
+	systemctl daemon-reload
+	udevadm control --reload
+	sed -i '/^# rpi900$/{N;s/.*\init_uart_clock=12000000$//}' /boot/config.txt
 }

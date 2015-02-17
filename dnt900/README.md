@@ -1,5 +1,5 @@
-Summary (version 0.3.5-1)
-=========================
+Summary
+=======
 
 The *dnt900* package installs the [DNT900 line discipline](https://github.com/mholling/dnt900) as a kernel module. The line discipline allows you to easily access and change register values for the DNT900 radio, as well as direct data to remote DNT900 radios on the network using a separate, virtual *TTY* for each radio.
 

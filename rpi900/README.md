@@ -51,9 +51,11 @@ Changing the DNT900 `SerialRate` register takes immediate effect and causes a lo
 Updating the Kernel
 ===================
 
-The DNT900 line discipline module is compiled specificically for the kernel currently installed. This is reflected in the version number of the *rpi900* package, which matches the kernel it was compiled against. Upgrading your kernel (as sometimes occurs during `sudo pacman -Syu`) will cause the module to no longer be found.
+The DNT900 line discipline module is compiled specifically for the kernel currently installed. This is reflected in the version number of the *rpi900* package, which matches the kernel it was compiled against. Upgrading your kernel (as sometimes occurs during `sudo pacman -Syu`) will cause the module to no longer be found.
 
-The Arch Linux kernel is upgraded frequently, so I recommend holding back kernel upgrades by adding `IgnorePkg = linux-raspberrypi linux-raspberrypi-headers` to the `[options]` section of your `/etc/pacman.conf` file.
+The Arch Linux kernel is upgraded frequently, so I recommend holding back kernel upgrades by adding the following line to the `[options]` section of your `/etc/pacman.conf` file:
+
+    IgnorePkg = linux-raspberrypi linux-raspberrypi-headers
 
 Then, if you decide to upgrade the kernel, use the following sequence of commands:
 

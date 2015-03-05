@@ -4,14 +4,17 @@ post_install() {
 	cat >> /boot/config.txt <<- EOF
 	
 	# rpi900-rtc
-	device_tree_overlay=pcf8523-rtc
+	dtoverlay=i2c-rtc,pcf8523
 	EOF
 }
 post_upgrade() {
+	if [[ ${2} = 1.0-1 ]]; then
+		sed -i 's/^device_tree_overlay=pcf8523-rtc$/dtoverlay=i2c-rtc,pcf8523/' /boot/config.txt
+	fi
 	systemctl daemon-reload
 }
 post_remove() {
-	sed -i '/^# rpi900-rtc$/{N;s/.*\device_tree_overlay=pcf8523-rtc$//}' /boot/config.txt
+	sed -i '/^# rpi900-rtc$/{N;s/.*\dtoverlay=i2c-rtc,pcf8523$//}' /boot/config.txt
 	systemctl disable rpi900-rtc.service
 	systemctl daemon-reload
 }

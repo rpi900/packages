@@ -1,12 +1,12 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900-rtc
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc='PCF8523 real-time clock service for RPi900'
 arch=('armv6h')
 url='http://rpi900.com'
 license=('GPL')
-depends=('linux-raspberrypi>=3.18.4')
+depends=('linux-raspberrypi>=3.18.4' 'raspberrypi-firmware-bootloader>=20150303-1')
 conflicts=('linux-rpi900')
 install=rpi900-rtc.install
 source=(

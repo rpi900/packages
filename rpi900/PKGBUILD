@@ -1,6 +1,6 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900
-_dnt900_ver='0.3.5'
+_dnt900_ver='0.3.6'
 pkgver=$(pacman -Q linux-raspberrypi | sed 's/linux-raspberrypi \([0-9\.]*\)-\([0-9]*\)/\1/')
 pkgrel=$(pacman -Q linux-raspberrypi | sed 's/linux-raspberrypi \([0-9\.]*\)-\([0-9]*\)/\2/')
 pkgdesc='DNT900 line discipline module and startup service for RPi900'
@@ -19,7 +19,7 @@ source=(
   99-rpi900.rules
 )
 md5sums=(
-  'ec1ca90b907f05f0f614193d1a2a4da2'
+  '26974ac6b3487c8b71150fb47949a20e'
   'SKIP'
   'SKIP'
   'SKIP'

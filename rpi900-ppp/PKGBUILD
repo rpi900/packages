@@ -1,9 +1,9 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpi900-ppp
 pkgver=0.1
-pkgrel=3
+pkgrel=4
 pkgdesc='PPP networking for RPi900'
-arch=('armv6h')
+arch=('armv6h' 'armv7h')
 url='http://rpi900.com'
 license=('GPL')
 depends=('rpirtscts' 'ppp' 'findutils')

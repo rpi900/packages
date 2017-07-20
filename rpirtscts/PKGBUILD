@@ -1,6 +1,6 @@
 # Maintainer: Matthew Hollingworth <matthew@rpi900.com>
 pkgname=rpirtscts
-pkgver=1.4
+pkgver=1.5
 pkgrel=1
 pkgdesc='hardware flow control utility for ttyAMA0 on Raspberry Pi'
 arch=('armv6h' 'armv7h')
@@ -11,7 +11,7 @@ source=(
   "rpirtscts-${pkgver}.tar.gz::https://github.com/mholling/rpirtscts/archive/v${pkgver}.tar.gz"
 )
 md5sums=(
-  '57886d0b173e56cbb970532c4db9a5d2'
+  'cf8705fac4dec0b76f1443c64c0ff07e'
 )
 build() {
   cd "${srcdir}/rpirtscts-${pkgver}"
